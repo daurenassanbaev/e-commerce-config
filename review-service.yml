@@ -1,0 +1,19 @@
+server:
+  port: 8096
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/review_db}
+
+  cloud:
+    stream:
+      bindings:
+        reviewCreated-out-0:
+          destination: review-created-topic
+        reviewDeleted-out-0:
+          destination: review-deleted-topic
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092

@@ -1,0 +1,32 @@
+server:
+  port: 8092
+
+spring:
+  cloud:
+    function:
+      definition: productCreatedConsumer;productUpdatedConsumer;productStatusChangedConsumer;reviewCreatedConsumer;reviewDeletedConsumer
+
+    stream:
+      bindings:
+        productCreatedConsumer-in-0:
+          destination: product-created-topic
+          group: ${spring.application.name}
+        productUpdatedConsumer-in-0:
+          destination: product-updated-topic
+          group: ${spring.application.name}
+        productStatusChangedConsumer-in-0:
+          destination: product-status-changed-topic
+          group: ${spring.application.name}
+        reviewCreatedConsumer-in-0:
+          destination: review-created-topic
+          group: ${spring.application.name}
+        reviewDeletedConsumer-in-0:
+          destination: review-deleted-topic
+          group: ${spring.application.name}
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+
+  elasticsearch:
+    uris: ${ELASTIC_URI:http://localhost:9200}
